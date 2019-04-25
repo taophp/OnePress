@@ -1,5 +1,7 @@
 namespace OnePress\DB;
 
-abstract class Item {
+use onePress\opObject;
+
+abstract class Item extends opObject {
 
 }

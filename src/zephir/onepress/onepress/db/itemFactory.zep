@@ -1,5 +1,7 @@
 namespace OnePress\DB;
 
-class ItemFactory {
+use onePress\opObject;
+
+class ItemFactory extends opObject {
 
 }
