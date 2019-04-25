@@ -1,5 +1,5 @@
 namespace OnePress\DB;
 
-class itemFactory {
+class ItemFactory {
 
 }
