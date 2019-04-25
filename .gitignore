@@ -1,2 +1,5 @@
 /cache/
 /config/development/
+src/zephir/onepress/compile-errors.log
+src/zephir/onepress/compile.log
+src/zephir/onepress/ext/
