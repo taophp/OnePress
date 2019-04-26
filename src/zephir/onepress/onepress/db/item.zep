@@ -16,7 +16,7 @@ abstract class Item extends opObject {
 		return "";
 	}
 
-	protected static function getNewId() -> string {
+	protected static final function getNewId() -> string {
 		var $id;
 		/** @see https://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid#answer-2040279 */
 		let $id = sprintf( "%04x%04x-%04x-%04x-%04x-%04x%04x%04x",
