@@ -61,4 +61,14 @@ abstract class Item extends opObject {
 
 	public function save() {
 	}
+
+	public function getParents() {
+		array $classes;
+		var $class = get_class();
+		while ($class !== false) {
+			let $classes[] = $class;
+			let $class = get_parent_class($class);
+		}
+		return $classes;
+	}
 }
