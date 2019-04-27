@@ -1,4 +1,4 @@
-namespace OnePress\DB;
+namespace OnePress\Db;
 
 use onePress\opObject;
 
