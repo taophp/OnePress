@@ -10,11 +10,21 @@ abstract class Item extends opObject {
 
 	public static function getClassFromId(<DiInterface> $di, const string! $id) -> string {
 		string $sql;
+		array $bindParams;
 		var $query;
-		let $sql = "SELECT class FROM Items WHERE id = :id:";
-		let $query = new Query($sql,$di);
+		var $results;
+		var $result;
+		var $class;
 
-		return "";
+		let $sql = "SELECT classname FROM Items WHERE id = :id:";
+		let $bindParams["id"] = $id;
+		let $query = new Query($sql,$di);
+		let $results = $query->execute($bindParams);
+
+		let $result = $results[0];
+		let $class = $result->classname;
+
+		return $class;
 	}
 
 	protected static final function getNewId() -> string {
@@ -43,13 +53,41 @@ abstract class Item extends opObject {
 	}
 
 	public function __construct(<DiInterface> $di, const string! $id = null) {
+		var $classes;
+		string $sql;
+		var $class;
 		let $this->di = $di;
+		var $query;
+		var $results;
+		var $result;
+		array $bindParams;
+		var $properties;
+		var $property;
+
 		if (empty $id) {
 			let $this->id =self::getNewId();
 			let $this->saved = false;
 		}else{
 			let $this->id =$id;
 			let $this->saved = true;
+		}
+		if ($this->saved) {
+			let $classes = self::getParents();
+		}
+		let $sql = "SELECT * FROM Items ";
+		for $class in $classes {
+			let $sql.= " LEFT JOIN ".$class." ON Item.id = ".$class.".id ";
+		}
+		let $sql.=" WHERE Items.id = :id:";
+
+		let $query = new Query($sql,$di);
+		let $bindParams["id"] = $id;
+		let $results = $query->execute($bindParams);
+		let $result = $results[0];
+
+		let $properties = get_object_vars($result);
+		for $property in $properties {
+			let $this->{$property} = $result->{$property};
 		}
 	}
 
@@ -60,11 +98,14 @@ abstract class Item extends opObject {
 	}
 
 	public function save() {
+
 	}
 
-	public function getParents() {
+	public static function getParents() -> array {
 		array $classes;
-		var $class = get_class();
+		var $class;
+
+		let $class = get_class();
 		while ($class !== false) {
 			let $classes[] = $class;
 			let $class = get_parent_class($class);
