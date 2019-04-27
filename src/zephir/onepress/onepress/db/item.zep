@@ -43,6 +43,6 @@ abstract class Item extends opObject {
 
 	public function __construct(<DiInterface> $di, const string! $id = null) {
 		let $this->di = $di;
-		let $this->id = $id;
+		let $this->id = empty $id ? self::getNewId() : $id;
 	}
 }
