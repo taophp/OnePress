@@ -6,6 +6,7 @@ use Phalcon\Mvc\Model\Query;
 abstract class Item extends opObject {
 	protected $di;
 	protected $id;
+	protected $saved;
 
 	public static function getClassFromId(<DiInterface> $di, const string! $id) -> string {
 		string $sql;
@@ -43,6 +44,21 @@ abstract class Item extends opObject {
 
 	public function __construct(<DiInterface> $di, const string! $id = null) {
 		let $this->di = $di;
-		let $this->id = empty $id ? self::getNewId() : $id;
+		if (empty $id) {
+			let $this->id =self::getNewId();
+			let $this->saved = false;
+		}else{
+			let $this->id =$id;
+			let $this->saved = true;
+		}
+	}
+
+	public function __destruct() {
+		if (!$this->saved) {
+			$this->save();
+		}
+	}
+
+	public function save() {
 	}
 }
