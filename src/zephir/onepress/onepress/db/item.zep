@@ -54,6 +54,7 @@ abstract class Item extends opObject {
 	}
 
 	public function __construct(<DiInterface> $di, const string! $id = null) {
+		/** @todo ensure that the call was made by ItemFactory */
 		var $classes;
 		string $sql;
 		var $class;
@@ -74,21 +75,21 @@ abstract class Item extends opObject {
 		}
 		if ($this->saved) {
 			let $classes = self::getParents();
-		}
-		let $sql = "SELECT * FROM Items ";
-		for $class in $classes {
-			let $sql.= " LEFT JOIN ".$class." ON Item.id = ".$class.".id ";
-		}
-		let $sql.=" WHERE Items.id = :id:";
+			let $sql = "SELECT * FROM Items ";
+			for $class in $classes {
+				let $sql.= " LEFT JOIN ".$class." ON Item.id = ".$class.".id ";
+			}
+			let $sql.=" WHERE Items.id = :id:";
 
-		let $query = new Query($sql,$di);
-		let $bindParams["id"] = $id;
-		let $results = $query->execute($bindParams);
-		let $result = $results[0];
+			let $query = new Query($sql,$di);
+			let $bindParams["id"] = $id;
+			let $results = $query->execute($bindParams);
+			let $result = $results[0];
 
-		let $properties = get_object_vars($result);
-		for $property in $properties {
-			let $this->{$property} = $result->{$property};
+			let $properties = get_object_vars($result);
+			for $property in $properties {
+				let $this->{$property} = $result->{$property};
+			}
 		}
 	}
 
@@ -113,9 +114,11 @@ abstract class Item extends opObject {
 		return $parentsDbFields;
 
 	}
+
 	public static function getDbFields() -> array {
 		return self::$dbFields;
 	}
+
 	public static function getParents() -> array {
 		array $classes;
 		var $class;

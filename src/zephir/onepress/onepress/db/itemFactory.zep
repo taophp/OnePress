@@ -20,4 +20,18 @@ class ItemFactory extends opObject {
 
 		return $item;
 	}
+
+	public function getNew(string! $class) {
+		var $item;
+		if unlikely !is_subclass_of($class,"Item") {
+			return null;
+			/** @todo throw Exception */
+		}
+		let $item = new {$class}($this->di);
+
+		let ItemFactory::$registry[$item->id] = $item;
+
+		return $item;
+
+	}
 }
