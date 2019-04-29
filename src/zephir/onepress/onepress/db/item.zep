@@ -7,6 +7,7 @@ abstract class Item extends opObject {
 	protected $di;
 	protected $id;
 	protected $saved;
+	protected static $dbFields = ["id","class"];
 
 	public static function getClassFromId(<DiInterface> $di, const string! $id) -> string {
 		string $sql;
@@ -98,9 +99,23 @@ abstract class Item extends opObject {
 	}
 
 	public function save() {
-
 	}
 
+	public function getParentsDbFields() -> array {
+		var $parents;
+		var $parent;
+		array $parentsDbFields;
+		let $parents = Item::getParents();
+
+		for $parent in $parents {
+			let $parentsDbFields[$parent] = {$parent}::getDbFields();
+		}
+		return $parentsDbFields;
+
+	}
+	public static function getDbFields() -> array {
+		return self::$dbFields;
+	}
 	public static function getParents() -> array {
 		array $classes;
 		var $class;
