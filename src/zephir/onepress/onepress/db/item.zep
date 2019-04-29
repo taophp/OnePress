@@ -99,14 +99,21 @@ abstract class Item extends opObject {
 		}
 	}
 
-	public function save() {
+	public function save() -> void {
+		var $parent, $dbFields;
+		string $sql;
+		var $parentsDbFields = $this->getParentsDbFields();
+
+		for $parent,$dbFields in $parentsDbFields {
+			let $sql = "UPDATE ".$parent." SET ";
+			/** @todo to finish */
+		}
 	}
 
 	public function getParentsDbFields() -> array {
-		var $parents;
 		var $parent;
 		array $parentsDbFields;
-		let $parents = Item::getParents();
+		var $parents = Item::getParents();
 
 		for $parent in $parents {
 			let $parentsDbFields[$parent] = {$parent}::getDbFields();
