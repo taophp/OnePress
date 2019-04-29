@@ -3,11 +3,12 @@ namespace OnePress\Db;
 use onePress\opObject;
 
 class ItemFactory extends opObject {
-	protected $registery = [];
+	protected static $registry = [];
+	protected $di;
 
 	public function getById(string! $id) {
-		if (array_key_exists($id,ItemFactory::$registry) {
-			return ItemFactory::$registery;
+		if (array_key_exists($id,self::$registry)) {
+			return ItemFactory::$registry;
 		}
 		var $class;
 		var $item;
@@ -15,7 +16,7 @@ class ItemFactory extends opObject {
 
 		let $item = new {$class}($this->di,$id);
 
-		let ItemFactory::registery[$id] = $item;
+		let ItemFactory::$registry[$id] = $item;
 
 		return $item;
 	}
