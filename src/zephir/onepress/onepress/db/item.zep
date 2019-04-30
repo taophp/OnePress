@@ -100,13 +100,25 @@ abstract class Item extends opObject {
 	}
 
 	public function save() -> void {
-		var $parent, $dbFields;
+		/** @todo what if the object is edited by another user at the same time ? */
+		var $parent, $dbFields,$query,$result,$bindParams,$field;
 		string $sql;
+		array $sqlUpdateParts;
 		var $parentsDbFields = $this->getParentsDbFields();
 
+		let $bindParams = get_object_vars($this);
+
+		/** @todo to optimize : update only the tables where changes occured */
 		for $parent,$dbFields in $parentsDbFields {
 			let $sql = "UPDATE ".$parent." SET ";
-			/** @todo to finish */
+			for $field in $dbFields {
+				let $sqlUpdateParts[] = $parent.".".$field." = :".$field.":";
+			}
+			let $sql.=implode(", ",$sqlUpdateParts);
+
+			let $query = new Query($sql,$this->di);
+			let $result = $query->execute($bindParams);
+			/** @todo manage errors */
 		}
 	}
 
