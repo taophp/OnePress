@@ -75,7 +75,7 @@ abstract class Item extends opObject {
 		}
 		if ($this->saved) {
 			let $classes = self::getParents();
-			let $sql = "SELECT * FROM Items ";
+			let $sql = "SELECT * FROM Item ";
 			for $class in $classes {
 				let $sql.= " LEFT JOIN ".$class." ON Item.id = ".$class.".id ";
 			}

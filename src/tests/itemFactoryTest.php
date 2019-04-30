@@ -9,8 +9,7 @@ class SubSubItem extends SubItem {}
 
 class ItemFactoryTest extends TestCase {
 	public function testSubItemIsCreated() {
-		$factory = new ItemFactory;
-		$this->assertInstanceOf('SubItem',$factory->getNew($this->di,'SubItem');
+		$factory = new ItemFactory();
+		$this->assertInstanceOf('SubItem',$factory->getNew($this->di,'SubItem'));
 	}
 }
-~
