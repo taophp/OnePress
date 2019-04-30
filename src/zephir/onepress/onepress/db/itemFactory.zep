@@ -23,7 +23,8 @@ class ItemFactory extends opObject {
 
 	public function getNew(string! $class) {
 		var $item;
-		if unlikely !is_subclass_of($class,"Item") {
+		if unlikely !is_subclass_of($class,"\Onepress\Db\Item") {
+			echo "\nClass:".$class."\n";
 			return null;
 			/** @todo throw Exception */
 		}
