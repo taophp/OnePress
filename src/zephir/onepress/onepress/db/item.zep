@@ -105,7 +105,7 @@ abstract class Item extends opObject {
 		string $sql;
 		array $sqlUpdateParts;
 		var $parentsDbFields = $this->getParentsDbFields();
-
+return;
 		let $bindParams = get_object_vars($this);
 
 		/** @todo to optimize : update only the tables where changes occured */
@@ -124,7 +124,7 @@ abstract class Item extends opObject {
 
 	public function getParentsDbFields() -> array {
 		var $parent;
-		array $parentsDbFields;
+		array $parentsDbFields =[];
 		var $parents = Item::getParents();
 
 		for $parent in $parents {
@@ -139,7 +139,7 @@ abstract class Item extends opObject {
 	}
 
 	public static function getParents() -> array {
-		array $classes;
+		array $classes = [];
 		var $class;
 
 		let $class = get_class();
