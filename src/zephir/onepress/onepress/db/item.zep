@@ -3,7 +3,7 @@ namespace OnePress\Db;
 use onePress\opObject;
 use Phalcon\Mvc\Model\Query;
 
-abstract class Item extends opObject {
+class Item extends opObject {
 	protected $di;
 	protected $id;
 	protected $saved;
@@ -103,9 +103,9 @@ abstract class Item extends opObject {
 		/** @todo what if the object is edited by another user at the same time ? */
 		var $parent, $dbFields,$query,$result,$bindParams,$field;
 		string $sql;
-		array $sqlUpdateParts;
+		var $sqlUpdateParts = [];
 		var $parentsDbFields = $this->getParentsDbFields();
-return;
+
 		let $bindParams = get_object_vars($this);
 
 		/** @todo to optimize : update only the tables where changes occured */
@@ -129,6 +129,9 @@ return;
 
 		for $parent in $parents {
 			let $parentsDbFields[$parent] = {$parent}::getDbFields();
+			if ($parent=== __CLASS__) {
+				break;
+			}
 		}
 		return $parentsDbFields;
 
