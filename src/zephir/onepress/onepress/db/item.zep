@@ -28,31 +28,6 @@ class Item extends opObject {
 		return $class;
 	}
 
-	protected static final function getNewId() -> string {
-		var $id;
-		/** @see https://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid#answer-2040279 */
-		let $id = sprintf( "%04x%04x-%04x-%04x-%04x-%04x%04x%04x",
-			// 32 bits for "time_low"
-			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-
-			// 16 bits for "time_mid"
-			mt_rand( 0, 0xffff ),
-
-			// 16 bits for "time_hi_and_version",
-			// four most significant bits holds version number 4
-			mt_rand( 0, 0x0fff ) | 0x4000,
-
-			// 16 bits, 8 bits for "clk_seq_hi_res",
-			// 8 bits for "clk_seq_low",
-			// two most significant bits holds zero and one for variant DCE1.1
-			mt_rand( 0, 0x3fff ) | 0x8000,
-
-			// 48 bits for "node"
-			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-		);
-		return $id;
-	}
-
 	public function __construct(<DiInterface> $di, const string! $id = null) {
 		/** @todo ensure that the call was made by ItemFactory */
 		var $classes;
@@ -67,13 +42,14 @@ class Item extends opObject {
 		var $property;
 
 		if (empty $id) {
-			let $this->id =self::getNewId();
+			$random = new \Phalcon\Security\Random();
+			let $this->id =$random->uuid();
 			let $this->saved = false;
 		}else{
 			let $this->id =$id;
 			let $this->saved = true;
 		}
-		if ($this->saved) {
+		if (!$this->saved) {
 			let $classes = self::getParents();
 			let $sql = "SELECT * FROM Item ";
 			for $class in $classes {
