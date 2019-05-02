@@ -30,7 +30,7 @@ class ItemFactory extends opObject {
 		}
 		let $item = new {$class}($this->di);
 
-		let ItemFactory::$registry[$item->id] = $item;
+		let ItemFactory::$registry[$item->getId()] = $item;
 
 		return $item;
 

@@ -1,13 +1,18 @@
 namespace OnePress\Db;
 
-use onePress\opObject;
 use Phalcon\Mvc\Model\Query;
+use OnePress\opObject;
+use OnePress\Db\Models\ItemModel;
 
 class Item extends opObject {
 	protected $di;
 	protected $id;
 	protected $saved;
 	protected static $dbFields = ["id","class"];
+
+	public function getId() {
+		return $this->id;
+	}
 
 	public static function getClassFromId(<DiInterface> $di, const string! $id) -> string {
 		string $sql;
@@ -30,30 +35,24 @@ class Item extends opObject {
 
 	public function __construct(<DiInterface> $di, const string! $id = null) {
 		/** @todo ensure that the call was made by ItemFactory */
-		var $classes;
+		var $class, $classes, $query, $result, $results, $property, $properties, $itemModel, $id;
 		string $sql;
-		var $class;
 		let $this->di = $di;
-		var $query;
-		var $results;
-		var $result;
 		array $bindParams;
-		var $properties;
-		var $property;
 
 		if (empty $id) {
-			$random = new \Phalcon\Security\Random();
-			let $this->id =$random->uuid();
+			let $itemModel = new ItemModel();
+			let $this->id = $itemModel->getId();
 			let $this->saved = false;
 		}else{
-			let $this->id =$id;
+			let $this->id = $id;
 			let $this->saved = true;
 		}
-		if (!$this->saved) {
+		if ($this->saved) {
 			let $classes = self::getParents();
-			let $sql = "SELECT * FROM Item ";
+			let $sql = "SELECT * FROM Items ";
 			for $class in $classes {
-				let $sql.= " LEFT JOIN ".$class." ON Item.id = ".$class.".id ";
+				let $sql.= " LEFT JOIN ".$class."s ON Items.id = ".$class.".id ";
 			}
 			let $sql.=" WHERE Items.id = :id:";
 
@@ -86,7 +85,7 @@ class Item extends opObject {
 
 		/** @todo to optimize : update only the tables where changes occured */
 		for $parent,$dbFields in $parentsDbFields {
-			let $sql = "UPDATE ".$parent." SET ";
+			let $sql = "UPDATE ".$parent."s SET ";
 			for $field in $dbFields {
 				let $sqlUpdateParts[] = $parent.".".$field." = :".$field.":";
 			}

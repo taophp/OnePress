@@ -24,6 +24,8 @@ class ItemFactoryTest extends TestCase {
 
 	public function testSubItemIsCreated() {
 		$factory = new ItemFactory($this->di);
-		$this->assertInstanceOf('SubItem',$factory->getNew('SubItem'));
+		$item = $factory->getNew('SubItem');
+		var_dump($item->getId());
+		$this->assertInstanceOf('SubItem',$item);
 	}
 }
