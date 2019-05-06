@@ -1,10 +1,7 @@
 namespace OnePress\Db;
 
-use onePress\opObject;
-
-class ItemFactory extends opObject {
+class ItemFactory {
 	protected static $registry = [];
-	protected $di;
 
 	public function getById(string! $id) {
 		/** @todo */
