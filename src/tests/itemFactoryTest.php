@@ -4,13 +4,13 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 
 use PHPUnit\Framework\TestCase;
-use OnePress\Db\Item;
+use OnePress\Db\Items;
 use OnePress\Db\ItemFactory;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Db\Pdo\Postgresql;
 
-class SubItem extends Item {}
-class SubSubItem extends SubItem {}
+class SubItems extends Items {}
+class SubSubItems extends SubItems {}
 
 
 class ItemFactoryTest extends TestCase {

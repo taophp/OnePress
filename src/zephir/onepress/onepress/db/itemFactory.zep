@@ -4,10 +4,15 @@ class ItemFactory {
 	protected static $registry = [];
 
 	public function getById(string! $id) {
-		/** @todo */
+		var $item,$class;
+
+		let $item = Items::findFirst(["tableoid::regclass": $id]);
+		let $class = $item->{"tableoid::regclass"};
+
+		return new {$class}($id);
 	}
 
 	public function getNew(string! $class) {
-		/** @todo */
+		return new {$class}();
 	}
 }
