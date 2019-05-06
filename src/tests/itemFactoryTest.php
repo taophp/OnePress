@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use OnePress\Db\Item;
 use OnePress\Db\ItemFactory;
 use Phalcon\Di\FactoryDefault;
-use Phalcon\Db\Pdo\Sqlite;
+use Phalcon\Db\Pdo\Postgresql;
 
 class SubItem extends Item {}
 class SubSubItem extends SubItem {}
@@ -18,7 +18,15 @@ class ItemFactoryTest extends TestCase {
 	protected function setUp() {
 		$this->di = new FactoryDefault();
 		$this->di->set('db',function() {
-			return new Sqlite(__DIR__.'/data.sqlite');
+			return new Postgresql(
+				[
+					'host' => 'localhost',
+					'dbname' => 'testonepress',
+					'port' => '5432',
+					'username' => 'test',
+					'password' => 'test',
+				]
+			);
 		});
 	}
 
