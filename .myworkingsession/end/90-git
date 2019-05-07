@@ -1,0 +1,4 @@
+#!/bin/bash
+git add -A
+git commit -m "Commit at the end of working session"
+git push
