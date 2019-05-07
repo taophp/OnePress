@@ -11,7 +11,7 @@ class Items extends Model {
 		$this->useDynamicUpdate(true);
 	}
 
-	protected function __destruct() {
+	public function __destruct() {
 		$this->save();
 	}
 }

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use OnePress\Db\Items;
 use OnePress\Db\ItemFactory;
 use Phalcon\Di\FactoryDefault;
-use Phalcon\Db\Pdo\Postgresql;
+use Phalcon\Db\Adapter\Pdo\Postgresql;
 
 class SubItems extends Items {}
 class SubSubItems extends SubItems {}
@@ -32,8 +32,17 @@ class ItemFactoryTest extends TestCase {
 
 	public function testSubItemIsCreated() {
 		$factory = new ItemFactory($this->di);
-		$item = $factory->getNew('SubItem');
-		var_dump($item->getId());
-		$this->assertInstanceOf('SubItem',$item);
+		$item = $factory->getNew('SubItems');
+		$this->assertInstanceOf('SubItems',$item);
 	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	public function testNotSubItemThrowException() {
+		$factory = new ItemFactory($this->di);
+		$factory->getNew('NotSubItems');
+
+	}
+
 }
