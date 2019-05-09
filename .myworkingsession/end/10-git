@@ -1,0 +1,14 @@
+#!/bin/bash
+function not_a_git_repository()
+{
+	if [ $1 -eq 128 ] ; then
+		git init
+		git add -A
+		git commit -m "Autocommit after work"
+		exit
+	fi
+}
+trap 'not_a_git_repository $? ' ERR
+git add -A
+git commit -m "Autocommit before work"
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+function no_such_repository()
+{
+if [ $1 -eq 2 ] ; then
+  borg init -e none pi@s1:/data/data/backup/steph/borg/`basename \`pwd\``
+  borg create --exclude-from .gitignore pi@s1:/data/data/backup/steph/borg/`basename \`pwd\``::`date +%Y-%m-%d` .
+  exit
+fi
+}
+trap 'no_such_repository $? ' ERR 
+borg create --exclude-from .gitignore pi@s1:/data/data/backup/steph/borg/`basename \`pwd\``::`date +%Y-%m-%d` . 
+
