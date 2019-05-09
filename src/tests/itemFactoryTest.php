@@ -22,9 +22,9 @@ class ItemFactoryTest extends TestCase {
 			return new Postgresql(
 				[
 					'host' => 'localhost',
-					'dbname' => 'OnePressTests',
+					'dbname' => 'onepresstests',
 					'port' => '5432',
-					'username' => 'OnePressTests',
+					'username' => 'onepresstests',
 					'password' => 'OnePressTests',
 				]
 			);
@@ -42,12 +42,7 @@ class ItemFactoryTest extends TestCase {
 	 */
 	public function testNotSubItemThrowException() {
 		$factory = new ItemFactory($this->di);
-		try {
-			$factory->getNew('NotSubItems');
-		} catch (\Exception $e) {
-			print_r($e);
-		}
-
+		$factory->getNew('NotSubItems');
 	}
 
 }

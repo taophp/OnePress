@@ -1,3 +1,5 @@
+USE onepresstests;
+
 CREATE EXTENSION uuid-ossp;
 
 CREATE TABLE Items(
