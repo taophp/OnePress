@@ -10,6 +10,7 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Db\Adapter\Pdo\Postgresql;
 
 class SubItems extends Items {}
+class NotSubItems{}
 class SubSubItems extends SubItems {}
 
 
@@ -21,10 +22,10 @@ class ItemFactoryTest extends TestCase {
 			return new Postgresql(
 				[
 					'host' => 'localhost',
-					'dbname' => 'testonepress',
+					'dbname' => 'OnePressTests',
 					'port' => '5432',
-					'username' => 'test',
-					'password' => 'test',
+					'username' => 'OnePressTests',
+					'password' => 'OnePressTests',
 				]
 			);
 		});
@@ -37,11 +38,15 @@ class ItemFactoryTest extends TestCase {
 	}
 
 	/**
-	 * @expectedException Exception
+	 * @expectedException \Exception
 	 */
 	public function testNotSubItemThrowException() {
 		$factory = new ItemFactory($this->di);
-		$factory->getNew('NotSubItems');
+		try {
+			$factory->getNew('NotSubItems');
+		} catch (\Exception $e) {
+			print_r($e);
+		}
 
 	}
 
