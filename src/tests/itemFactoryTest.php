@@ -44,19 +44,6 @@ class ItemFactoryTest extends TestCase {
 		$factory->getNew('NotSubItems');
 	}
 
-	/**
-	 *  @expectedException \Exception
-	 */
-	 public function testCreateItemOutOfFactoryRaiseException() {
-		 $t = new Items();
-	 }
-
-	/**
-	 *  @expectedException \Exception
-	 */
-	 public function testCreateSubItemOutOfFactoryRaiseException() {
-		 $t = new SubItems();
-	 }
 
 	 public function testGetItemById() {
 		 $factory = new ItemFactory($this->di);

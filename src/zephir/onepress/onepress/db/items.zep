@@ -3,6 +3,7 @@ namespace OnePress\Db;
 use Phalcon\Mvc\Model;
 
 class Items extends Model {
+	const FACTORY_CLASS = "OnePress\\Db\\ItemFactory";
 	protected $id {
 		get, toString
 	};
