@@ -13,7 +13,6 @@ class SubItems extends Items {}
 class NotSubItems{}
 class SubSubItems extends SubItems {}
 
-
 class ItemFactoryTest extends TestCase {
 	protected $di;
 	protected function setUp() {
@@ -45,4 +44,39 @@ class ItemFactoryTest extends TestCase {
 		$factory->getNew('NotSubItems');
 	}
 
+	/**
+	 *  @expectedException \Exception
+	 */
+	 public function testCreateItemOutOfFactoryRaiseException() {
+		 $t = new Items();
+	 }
+
+	/**
+	 *  @expectedException \Exception
+	 */
+	 public function testCreateSubItemOutOfFactoryRaiseException() {
+		 $t = new SubItems();
+	 }
+
+	 public function testGetItemById() {
+		 $factory = new ItemFactory($this->di);
+		 $tItem = $factory->getNew('OnePress\\Db\\Items');
+		 $tItem->save();
+		 $id = $tItem->id;
+		 unset ($tItem);
+		 $item = $factory->getById($id);
+		 $this->assertInstanceOf('OnePress\\Db\\Items');
+		 $this->assertEquals($id,$item->id);
+	 }
+
+
+	 public function testGetSubItemById() {
+		 $factory = new ItemFactory($this->di);
+		 $tItem = $factory->getNew('SubItems');
+		 $tItem->save();
+		 $id = $tItem->id;
+		 unset ($tItem);
+		 $item = $factory->getById($id);
+		 $this->assertInstanceOf('SubItems');
+	 }
 }
