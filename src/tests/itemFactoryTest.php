@@ -30,6 +30,7 @@ class ItemFactoryTest extends TestCase {
 		});
 	}
 
+
 	public function testSubItemIsCreated() {
 		$factory = new ItemFactory($this->di);
 		$item = $factory->getNew('SubItems');
