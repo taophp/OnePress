@@ -45,7 +45,17 @@ class ItemFactoryTest extends TestCase {
 		$factory->getNew('NotSubItems');
 	}
 
+	public function testNewItemIdIsNotNull() {
+		$factory = new ItemFactory($this->di);
+		$item = $factory->getNew('OnePress\\Db\\Items');
+		$item->save();
+		$this->assertNotNull($item->id);
+	}
 
+	 /**
+	  * @depends testNewItemIdIsNotNull
+	  * @see https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave
+	  */
 	 public function testGetItemById() {
 		 $factory = new ItemFactory($this->di);
 		 $tItem = $factory->getNew('OnePress\\Db\\Items');
@@ -57,7 +67,9 @@ class ItemFactoryTest extends TestCase {
 		 $this->assertEquals($id,$item->id);
 	 }
 
-
+	 /**
+	  * @depends testNewItemIdIsNotNull
+	  */
 	 public function testGetSubItemById() {
 		 $factory = new ItemFactory($this->di);
 		 $tItem = $factory->getNew('SubItems');
