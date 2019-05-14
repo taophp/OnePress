@@ -55,6 +55,7 @@ class ItemFactoryTest extends TestCase {
 	 /**
 	  * @depends testNewItemIdIsNotNull
 	  * @see https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave
+	  * @see https://github.com/phalcon/cphalcon/issues/220
 	  */
 	 public function testGetItemById() {
 		 $factory = new ItemFactory($this->di);
