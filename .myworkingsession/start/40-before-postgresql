@@ -1,0 +1,7 @@
+#!/bin/bash
+sudo mkdir /var/run/postgresql
+sudo chown postgres:postgres /var/run/postgresql
+sudo mkdir /var/run/postgresql/10-main.pg_stat_tmp
+sudo chown postgres:postgres /var/run/postgresql/10-main.pg_stat_tmp
+sudo touch /var/run/postgresql/10-main.pg_stat_tmp/global.tmp
+sudo chown postgres:postgres /var/run/postgresql/10-main.pg_stat_tmp/global.tmp
