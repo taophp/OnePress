@@ -24,7 +24,9 @@ class Items extends Model {
      * @todo debug, optimize "à la" zephir
      */
     public function pg_create($data) {
-		var $table,$di,$db,$fields,$columns,$d,$fieldNames,$fieldValues,$qs,$sql,$result,$rows;
+			die();
+			var
+			$table,$di,$db,$fields,$columns,$d,$fieldNames,$fieldValues,$qs,$sql,$result,$rows,$column;
 
         let $table = $this->getSource();
 
@@ -47,15 +49,18 @@ class Items extends Model {
         let $fieldNames = implode(',', array_keys($d));
         let $fieldValues = array_values($d);
 
-        let $qs = str_repeat("?,", count($fieldValues) - 1) . '?';
+        let $qs = str_repeat("?,", count($fieldValues) - 1) . "?";
 
         let $sql = "INSERT INTO {$table} ({$fieldNames}) VALUES ({$qs}) RETURNING *";
-		let $result = $db->query($sql, $fieldValues);
+				let $result = $db->query($sql, $fieldValues);
+
         if ($result === false) {return false;}
-        let $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        let $rows = $result->fetchAll(2);
         if ($rows === false) {return false;}
 
         $this->assign($rows[0]);
+        print_r($rows);
         return true;
     }
 }
