@@ -20,10 +20,17 @@ class Items extends Model {
 	}
 
     /**
-     * @see https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave
-     * @todo debug, optimize "à la" zephir
-     */
-    public function save($data) {
+	 * Sends a pre-build INSERT SQL statement to the relational database system
+	 *
+	 * @param string|array table
+	 * @param bool|string identityField
+     * @see https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave#C45221
+     * @see https://github.com/phalcon/cphalcon/blob/master/phalcon/mvc/model.zep (line 3048)
+     * @todo rewrite the way `pg_create` is in https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave#C45221
+	 */
+	protected function _doLowInsert(<MetaDataInterface> metaData, <AdapterInterface> connection,
+table, identityField) -> bool
+	{
 		var $table,$di,$db,$fields,$columns,$d,$fieldNames,$fieldValues,$qs,$sql,$result,$rows,$column;
 
         let $table = $this->getSource();
