@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use OnePress\Db\Items;
 use OnePress\Db\ItemFactory;
 use Phalcon\Di\FactoryDefault;
-use Phalcon\Db\Adapter\Pdo\Postgresql;
+use OnePress\Db\Adapter;
 
 class SubItems extends Items {}
 class NotSubItems{}
@@ -18,7 +18,7 @@ class ItemFactoryTest extends TestCase {
 	protected function setUp() {
 		$this->di = new FactoryDefault();
 		$this->di->set('db',function() {
-			return new Postgresql(
+			return new Adapter(
 				[
 					'host' => 'localhost',
 					'dbname' => 'onepresstests',
@@ -30,6 +30,9 @@ class ItemFactoryTest extends TestCase {
 		});
 	}
 
+	public function testTableNameFromClassNameIsItems4DBItems() {
+		$this->assertEquals('items',ItemFactory::getTableNameFromClassName('OnePress\\Db\\Items'));
+	}
 
 	public function testSubItemIsCreated() {
 		$factory = new ItemFactory($this->di);
