@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use OnePress\Db\Items;
 use OnePress\Db\ItemFactory;
 use Phalcon\Di\FactoryDefault;
-use OnePress\Db\Adapter;
+use Phalcon\Db\Adapter\Pdo\Postgresql;
 
 class SubItems extends Items {}
 class NotSubItems{}
@@ -18,7 +18,7 @@ class ItemFactoryTest extends TestCase {
 	protected function setUp() {
 		$this->di = new FactoryDefault();
 		$this->di->set('db',function() {
-			return new Adapter(
+			return new Postgresql(
 				[
 					'host' => 'localhost',
 					'dbname' => 'onepresstests',

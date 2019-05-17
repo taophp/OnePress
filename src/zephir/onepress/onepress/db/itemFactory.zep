@@ -18,18 +18,21 @@ class ItemFactory {
 		return new {$class}($id);
 	}
 
-	public function getNew(string! $class) {
-		var $tableName,$db;
+	public function getNew(string $class, string $name = null) {
+		var $tableName,$db,$item;
+
+		if (empty($name)) {
+			let $name = "New ".$class;
+		}
 
 		if unlikely ($class !== "OnePress\\Db\\Items" && !is_subclass_of($class,"OnePress\\Db\\Items")) {
 			throw "Class ".$class." is not a subclass of OnePress\Db\Items !";
 		}
 
-		let $tableName = static::getTableNameFromClassName($class);
-		let $db = $this->di->get("db");
-		$db->registerTableUsingUuid($tableName);
+		let $item = new {$class}();
+		$item->create(["displayName":$name]);
 
-		return new {$class}();
+		return $item;
 	}
 
 	public static function getTableNameFromClassName(string $class) {
