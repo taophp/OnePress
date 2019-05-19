@@ -19,7 +19,7 @@ class ItemFactory {
 	}
 
 	public function getNew(string $class, string $name = null) {
-		var $tableName,$db,$item;
+		var $item;
 
 		if (empty($name)) {
 			let $name = "New ".$class;
@@ -30,7 +30,7 @@ class ItemFactory {
 		}
 
 		let $item = new {$class}();
-		$item->create(["displayName":$name]);
+		$item->pg_create(["displayName":$name]);
 
 		return $item;
 	}

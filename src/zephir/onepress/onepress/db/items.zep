@@ -12,18 +12,14 @@ class Items extends Model {
 
 
 	public function initialize() {
-		$this->useDynamicUpdate(true);
-	}
-
-	public function __destruct() {
-		$this->save();
+		//$this->useDynamicUpdate(true);
 	}
 
 			/**
 		 * @see https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave
 		 * @todo debug, optimize "à la" zephir
 		 */
-		public function create($data) {
+		public function pg_create($data) {
 		var $table,$di,$db,$fields,$columns,$d,$fieldNames,$fieldValues,$qs,$sql,$result,$rows,$column;
 
 				let $table = $this->getSource();
@@ -50,7 +46,7 @@ class Items extends Model {
 				let $qs = str_repeat("?,", count($fieldValues) - 1) . "?";
 
 				let $sql = "INSERT INTO {$table} ({$fieldNames}) VALUES ({$qs}) RETURNING *";
-		let $result = $db->query($sql, $fieldValues);
+				let $result = $db->query($sql, $fieldValues);
 				if ($result === false) {return false;}
 				let $rows = $result->fetchAll(2);
 				if ($rows === false) {return false;}
