@@ -1,8 +1,8 @@
 CREATE EXTENSION "uuid-ossp";
 
 CREATE TABLE items(
-	id UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
-	displayName VARCHAR
+	uid UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
+	display_name VARCHAR
 );
 
 ALTER TABLE items OWNER TO onepresstests;

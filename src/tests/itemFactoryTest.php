@@ -9,7 +9,13 @@ use OnePress\Db\ItemFactory;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Db\Adapter\Pdo\Postgresql;
 
-class SubItems extends Items {}
+class SubItems extends Items {
+	/*protected $_settable = [
+		'uid',
+		'display_name',
+		'test',
+	];*/
+}
 class NotSubItems{}
 class SubSubItems extends SubItems {}
 
@@ -17,8 +23,7 @@ class ItemFactoryTest extends TestCase {
 	protected $di;
 	protected function setUp() {
 		$this->di = new FactoryDefault();
-		$this->di->set('db',function() {
-			return new Postgresql(
+		$this->di->set('db',new Postgresql(
 				[
 					'host' => 'localhost',
 					'dbname' => 'onepresstests',
@@ -26,65 +31,26 @@ class ItemFactoryTest extends TestCase {
 					'username' => 'onepresstests',
 					'password' => 'OnePressTests',
 				]
-			);
-		});
+			)
+		);
+		$this->factory = new ItemFactory($this->di);
 	}
 
 	public function testTableNameFromClassNameIsItems4DBItems() {
 		$this->assertEquals('items',ItemFactory::getTableNameFromClassName('OnePress\\Db\\Items'));
 	}
 
-	public function testSubItemIsCreated() {
-		$factory = new ItemFactory($this->di);
-		$item = $factory->getNew('SubItems');
-		$this->assertInstanceOf('SubItems',$item);
-	}
-
-	/**
-	 * @expectedException \Exception
-	 */
-	public function testNotSubItemThrowException() {
-		$factory = new ItemFactory($this->di);
-		$factory->getNew('NotSubItems');
-	}
-
-	/**
-	 * @requires extension toto
-	 * */
-	public function testNewItemIdIsNotNull() {
-		$factory = new ItemFactory($this->di);
-		$item = $factory->getNew('OnePress\\Db\\Items');
+	public function testItemIsCreatedProperly() {
+		$item = $this->factory->getNew('OnePress\\Db\\Items');
+		$this->assertInstanceOf('OnePress\\Db\\Items',$item);
 		$this->assertNotNull($item->uid);
 	}
 
-	 /**
-	  * @depends testNewItemIdIsNotNull
-	  * @see https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave
-	  * @see https://github.com/phalcon/cphalcon/issues/220
-		* @requires extension toto
-	  */
-	 public function testGetItemById() {
-		 $factory = new ItemFactory($this->di);
-		 $tItem = $factory->getNew('OnePress\\Db\\Items');
-		 //$tItem->save();
-		 $id = $tItem->id;
-		 unset ($tItem);
-		 $item = $factory->getById($id);
-		 $this->assertInstanceOf('OnePress\\Db\\Items');
-		 $this->assertEquals($id,$item->id);
-	 }
+	public function testSubItemIsCreatedProperly() {
+		$item2 = $this->factory->getNew('SubItems');
+		$this->assertInstanceOf('SubItems',$item2);
+		$this->assertNotNull($item2->uid);
+	}
 
-	 /**
-	  * @depends testNewItemIdIsNotNull
-		* @requires extension toto
-		* */
- public function testGetSubItemById() {
-		 $factory = new ItemFactory($this->di);
-		 $tItem = $factory->getNew('SubItems');
-		 //$tItem->save();
-		 $id = $tItem->id;
-		 unset ($tItem);
-		 $item = $factory->getById($id);
-		 $this->assertInstanceOf('SubItems');
-	 }
+
 }

@@ -30,7 +30,7 @@ class ItemFactory {
 		}
 
 		let $item = new {$class}();
-		$item->pg_create(["displayName":$name]);
+		$item->pg_create(["display_name":$name]);
 
 		return $item;
 	}
