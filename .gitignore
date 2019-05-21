@@ -4,3 +4,4 @@ src/zephir/onepress/compile-errors.log
 src/zephir/onepress/compile.log
 src/zephir/onepress/config.json
 src/zephir/onepress/ext/
+.couscous

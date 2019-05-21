@@ -1,0 +1,8 @@
+exclude:
+   - "%gitignore%"
+title: OnePress
+subTitle: OnePress to rule them all
+baseUrl: https://taophp.github.io/OnePress
+github:
+    user: taophp
+    repo: OnePress
