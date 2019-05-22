@@ -15,5 +15,5 @@ menu:
          text: Getting started
          relativeUrl: docs/start.html
       data:
-         text: Data structure
+         text: Database
          relativeUrl: docs/data.html
