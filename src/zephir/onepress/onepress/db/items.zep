@@ -5,6 +5,7 @@ use Phalcon\Db\Column;
 use Phalcon\Mvc\Model\MetaData;
 
 class Items extends Model {
+	public $test="TEST";
 	protected $_settable = NULL;
 	protected $uid {
 		get, toString

@@ -12,15 +12,19 @@ class ItemFactory {
 
 	public function getById(const string! $uid)
 	{
-		var $item,$class;
+		var $item,$class,$test;
+		var_dump($uid);
+		let $test = new Items();
+		var_dump($test->test);
 
-		let $item = Items::findFirst(["uid": $uid]);
-		let $class = $item->{"tableoid::regclass"};
+		//let $item = Items::findFirst(["uid":$uid]);
+		var_dump("TOTO");
+		//let $class = $item->{"tableoid::regclass"};
 
-		return new {$class}($uid);
+		//return new {$class}($uid);
 	}
 
-	public function getNew(const string $class, string $name = null)
+	public function getNew(const string! $class, string $name = null)
 	{
 		var $item;
 
