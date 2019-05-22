@@ -1,4 +1,4 @@
 #!/bin/bash
-cd `dirname "$0"`/../../src/tests
+cd `dirname "$0"`/../../tests
 phpunit *
 
