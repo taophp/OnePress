@@ -6,3 +6,14 @@ baseUrl: https://taophp.github.io/OnePress
 github:
     user: taophp
     repo: OnePress
+menu:
+   items:
+      index:
+         text: Home
+         relativeUrl: index.html
+      start:
+         text: Getting started
+         relativeUrl: docs/start.html
+      data:
+         text: Data structure
+         relativeUrl: docs/data.html

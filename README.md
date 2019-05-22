@@ -1,3 +1,6 @@
+---
+current_menu: index
+---
 # OnePress
 
 > OnePress to rule them all
@@ -16,3 +19,5 @@ a real pain for agencies to maintain all those websites,
 the way they did most of the time.
 
 With OnePress, web agencies are _first class citizens_.
+
+[Documentation](docs/README.md)
