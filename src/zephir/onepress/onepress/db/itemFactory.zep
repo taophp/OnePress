@@ -5,11 +5,13 @@ use Phalcon\DiInterface;
 class ItemFactory {
 	protected $di;
 
-	public function __construct(<DiInterface> $di) {
+	public function __construct(<DiInterface> $di)
+	{
 		let $this->di = $di;
 	}
 
-	public function getById(string! $id) {
+	public function getById(const string! $id)
+	{
 		var $item,$class;
 
 		let $item = Items::findFirst(["tableoid::regclass": $id]);
@@ -18,7 +20,8 @@ class ItemFactory {
 		return new {$class}($id);
 	}
 
-	public function getNew(string $class, string $name = null) {
+	public function getNew(const string $class, string $name = null)
+	{
 		var $item;
 
 		if (empty($name)) {
@@ -35,7 +38,8 @@ class ItemFactory {
 		return $item;
 	}
 
-	public static function getTableNameFromClassName(string $class) {
+	public static function getTableNameFromClassName(const string $class) -> string
+	{
 		return strtolower(substr($class,strrpos($class,"\\")+1));
 	}
 }

@@ -51,6 +51,4 @@ class ItemFactoryTest extends TestCase {
 		$this->assertInstanceOf('SubItems',$item2);
 		$this->assertNotNull($item2->uid);
 	}
-
-
 }
