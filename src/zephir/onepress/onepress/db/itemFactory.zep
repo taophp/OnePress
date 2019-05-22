@@ -10,14 +10,14 @@ class ItemFactory {
 		let $this->di = $di;
 	}
 
-	public function getById(const string! $id)
+	public function getById(const string! $uid)
 	{
 		var $item,$class;
 
-		let $item = Items::findFirst(["tableoid::regclass": $id]);
+		let $item = Items::findFirst(["uid": $uid]);
 		let $class = $item->{"tableoid::regclass"};
 
-		return new {$class}($id);
+		return new {$class}($uid);
 	}
 
 	public function getNew(const string $class, string $name = null)
