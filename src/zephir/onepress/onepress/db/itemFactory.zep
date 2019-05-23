@@ -2,8 +2,10 @@ namespace OnePress\Db;
 
 use Phalcon\DiInterface;
 
-class ItemFactory {
+class ItemFactory
+{
 	protected $di;
+	protected $count;
 
 	public function __construct(<DiInterface> $di)
 	{
@@ -12,16 +14,40 @@ class ItemFactory {
 
 	public function getById(const string! $uid)
 	{
-		var $item,$class,$test;
-		var_dump($uid);
-		let $test = new Items();
-		var_dump($test->test);
+		var $db,$sql,$result,$rows,$class,$item;
 
-		//let $item = Items::findFirst(["uid":$uid]);
-		var_dump("TOTO");
-		//let $class = $item->{"tableoid::regclass"};
+		let $db = $this->di["db"];
 
-		//return new {$class}($uid);
+		let $sql = "SELECT tableoid::regclass AS class FROM items WHERE uid = ? LIMIT 1";
+		let $result = $db->query($sql,[$uid]);
+
+		if unlikely $result === false
+		{
+			/**
+			 * @todo get error message from PDO
+			 */
+			throw "Failed to get item '".$uid."' from database!\n,Query :".print_r($sql,true);
+		}
+
+		let $rows = $result->fetchAll(2); // PDO::FETCH_ASSOC == 2, but we cannot use this constante here !
+		if ($rows === false)
+		{
+			/**
+			 * @todo get error message from PDO
+			 */
+			throw "Failed to get data from database when inserting item!\n,Query :".print_r($sql,true);
+		}
+		let $class = static::getClassNameFromTableName($rows[0]["class"]);
+
+		if !class_exists($class)
+		{
+			let $class = "OnePress\\Db\\".$class;
+		}
+
+		let $item = new {$class}();
+		$item->pgGetByUid($uid,$this->di);
+
+		return $item;
 	}
 
 	public function getNew(const string! $class, string $name = null)
@@ -37,7 +63,7 @@ class ItemFactory {
 		}
 
 		let $item = new {$class}();
-		$item->pg_create(["display_name":$name]);
+		$item->pgCreate(["display_name":$name],$this->di);
 
 		return $item;
 	}
@@ -45,5 +71,17 @@ class ItemFactory {
 	public static function getTableNameFromClassName(const string $class) -> string
 	{
 		return strtolower(substr($class,strrpos($class,"\\")+1));
+	}
+
+	public static function getClassNameFromTableName(const string $table) -> string
+	{
+		var $parts,k,$part;
+
+		let $parts = explode("_",$table);
+		for k,$part in $parts {
+			let $parts[k] = ucfirst($part);
+		}
+
+		return implode("",$parts);
 	}
 }

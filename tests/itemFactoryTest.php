@@ -54,35 +54,21 @@ class ItemFactoryTest extends TestCase {
 		$this->di->get('itemFactory')->getNew('NotSubItems');
 	}
 
-	/**
-	 * @expectedException \Exception
-	 */
-	 public function testCreateItemOutOfFactoryRaiseException() {
-		 $t = new Items();
-	 }
-
-	/**
-	 * @expectedException \Exception
-	 */
-	public function testCreateSubItemOutOfFactoryRaiseException() {
-		 $t = new SubItems();
+	public function testGetItemByUid() {
+		$factory = $this->di->get('itemFactory');
+		$tItem = $factory->getNew('OnePress\\Db\\Items');
+		$uid = $tItem->uid;
+		unset ($tItem);
+		$item = $factory->getById($uid);
+		$this->assertInstanceOf('OnePress\\Db\\Items',$item);
+		$this->assertEquals($uid,$item->uid);
 	}
 
-	public function testGetItemById() {
-		$tItem = $this->di->get('itemFactory')->getNew('OnePress\\Db\\Items');
+	public function testGetSubItemByUid() {
+		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
 		$uid = $tItem->uid;
 		unset ($tItem);
 		$item = $this->di->get('itemFactory')->getById($uid);
-		$this->assertInstanceOf('OnePress\\Db\\Items');
-		$this->assertEquals($id,$item->uid);
-	}
-
-	public function testGetSubItemById() {
-		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
-		$tItem->save();
-		$id = $tItem->uid;
-		unset ($tItem);
-		$item = $this->di->get('itemFactory')->getById($uid);
-		$this->assertInstanceOf('SubItems');
+		$this->assertInstanceOf('SubItems',$item);
 	}
 }

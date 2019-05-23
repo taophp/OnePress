@@ -3,9 +3,9 @@ namespace OnePress\Db;
 use Phalcon\Mvc\Model;
 use Phalcon\Db\Column;
 use Phalcon\Mvc\Model\MetaData;
+use Phalcon\DiInterface;
 
 class Items extends Model {
-	public $test="TEST";
 	protected $_settable = NULL;
 	protected $uid {
 		get, toString
@@ -21,12 +21,11 @@ class Items extends Model {
 	 * @see https://forum.phalconphp.com/discussion/8397/return-primary-key-after-createsave
 	 * @todo optimize "à la" zephir
 	 */
-	public function pg_create(const array $data) -> bool
+	public function pgCreate(const array $data,<DiInterface> $di) -> bool
 	{
-		var $table,$di,$db,$fields,$columns,$d,$fieldNames,$fieldValues,$qs,$sql,$result,$rows,$column;
+		var $table,$db,$fields,$columns,$d,$fieldNames,$fieldValues,$qs,$sql,$result,$rows,$column;
 		let $table = $this->getSource();
-		let $di = \Phalcon\DI::getDefault();
-		let $db = $di["db"];
+		let $db = $di->get("db");
 
 		let $fields = [];
 		if ($this->_settable && is_array($this->_settable)) {
@@ -46,11 +45,54 @@ class Items extends Model {
 
 		let $sql = "INSERT INTO ".$table." (".$fieldNames.") VALUES (".$qs.") RETURNING *";
 		let $result = $db->query($sql, $fieldValues);
-		if ($result === false) {return false;}
+		if unlikely $result === false
+		{
+			/**
+			 * @todo get error message from PDO
+			 */
+			throw "Failed to insert item in database!\n,Query :".print_r($sql,true);
+		}
 		let $rows = $result->fetchAll(2); // PDO::FETCH_ASSOC == 2, but we cannot use this constante here !
-		if ($rows === false) {return false;}
+		if ($rows === false)
+		{
+			/**
+			 * @todo get error message from PDO
+			 */
+			throw "Failed to get data from database when inserting item!\n,Query :".print_r($sql,true);
+		}
 
 		$this->assign($rows[0]);
 		return true;
+	}
+
+	public function pgGetByUid(const string! $uid,<DiInterface> $di) {
+		var $table,$db,$sql,$result,$rows;
+
+		let $table = $this->getSource();
+		let $db = $di->get("db");
+
+		let $sql = "SELECT tableoid::regclass AS class FROM items WHERE uid = ? LIMIT 1";
+		let $result = $db->query($sql,[$uid]);
+
+		if unlikely $result === false
+		{
+			/**
+			 * @todo get error message from PDO
+			 */
+			throw "Failed to get item '".$uid."from database!\n,Query :".print_r($sql,true);
+		}
+
+		let $rows = $result->fetchAll(2); // PDO::FETCH_ASSOC == 2, but we cannot use this constante here !
+		if ($rows === false)
+		{
+			/**
+			 * @todo get error message from PDO
+			 */
+			throw "Failed to get data from database when inserting item!\n,Query :".print_r($sql,true);
+		}
+
+		$this->assign($rows[0]);
+		return true;
+
 	}
 }
