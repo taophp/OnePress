@@ -1,0 +1,2 @@
+* check if the table naming and the Items child classes nameing convention can be more coherent with the Phalcon way.
+

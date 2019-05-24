@@ -20,3 +20,5 @@ the way they did most of the time.
 
 With OnePress, web agencies are _first class citizens_.
 
+[Want to contribute ?](/docs/contributing.html)
+
