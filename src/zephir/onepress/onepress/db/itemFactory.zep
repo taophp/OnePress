@@ -30,7 +30,7 @@ class ItemFactory
 		}
 
 		let $rows = $result->fetchAll(2); // PDO::FETCH_ASSOC == 2, but we cannot use this constante here !
-		if ($rows === false)
+		if unlikely $rows === false
 		{
 			/**
 			 * @todo get error message from PDO
