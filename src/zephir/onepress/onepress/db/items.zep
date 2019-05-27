@@ -71,7 +71,7 @@ class Items extends Model {
 		let $table = $this->getSource();
 		let $db = $di->get("db");
 
-		let $sql = "SELECT tableoid::regclass AS class FROM items WHERE uid = ? LIMIT 1";
+		let $sql = "SELECT * FROM items WHERE uid = ? LIMIT 1";
 		let $result = $db->query($sql,[$uid]);
 
 		if unlikely $result === false
@@ -93,6 +93,5 @@ class Items extends Model {
 
 		$this->assign($rows[0]);
 		return true;
-
 	}
 }

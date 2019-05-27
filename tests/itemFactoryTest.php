@@ -70,5 +70,6 @@ class ItemFactoryTest extends TestCase {
 		unset ($tItem);
 		$item = $this->di->get('itemFactory')->getById($uid);
 		$this->assertInstanceOf('SubItems',$item);
+		$this->assertEquals($uid,$item->uid);
 	}
 }
