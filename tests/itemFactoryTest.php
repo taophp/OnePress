@@ -78,9 +78,21 @@ class ItemFactoryTest extends TestCase {
 		$name = $tItem->display_name;
 		$uid = $tItem->uid;
 		unset($tItem);
-		$item = SubItems::find(['display_name' => $name])[0];
+		$item = SubItems::findFirst(['display_name' => $name]);
 		$this->assertInstanceOf('SubItems',$item);
 		$this->assertEquals($uid,$item->uid);
 		$this->assertEquals($name,$item->display_name);
 	}
+
+	public function testFindFirstByDisplay_name() {
+		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
+		$name = $tItem->display_name;
+		$uid = $tItem->uid;
+		unset($tItem);
+		$item = SubItems::findFirstByDisplay_name($name);
+		$this->assertInstanceOf('SubItems',$item);
+		$this->assertEquals($uid,$item->uid);
+		$this->assertEquals($name,$item->display_name);
+	}
+
 }
