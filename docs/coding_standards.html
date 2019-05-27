@@ -56,21 +56,44 @@
 
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="onepress">OnePress</h1>
-<blockquote>
-<p>OnePress to rule them all</p>
-</blockquote>
-<p><a href="https://www.gnu.org/licenses/agpl-3.0.en.html"><img src="https://img.shields.io/github/license/taophp/OnePress.svg?style=popout-square" alt="License AGPL-v3" /></a></p>
-<h2 id="what-is-onepress">What is OnePress</h2>
-<p><strong>OnePress is currently in its very beginning, unusable.</strong> So, don't expect
-it to work. You can have a glimpse of the code and even contribute if you
-like. That's all.</p>
-<p>OnePress intend to be a CMS of a new kind, built for web agencies, by a web agency.
-It's really amazing that no CMS targets this audience nowadays and it is
-a real pain for agencies to maintain all those websites,
-the way they did most of the time.</p>
-<p>With OnePress, web agencies are <em>first class citizens</em>.</p>
-<p><a href="/docs/contributing.html">Want to contribute ?</a></p>
+                    <h1 id="coding-standards">Coding standards</h1>
+<h2 id="objects-extending-from">Objects extending from <code>OnePress\db\Items</code></h2>
+<p>Those objects are stored in Postgresql database, which has its own naming sheme.
+In particular, all table and field names are lower case. This is not the way
+PHP used us to. We have decided to allow PHP coders to continue their way
+using some naming conventions the feel the gap.</p>
+<h3 id="classe-names">Classe names</h3>
+<p><strong><em>Rules</em></strong></p>
+<ul>
+<li>Classes extending from <code>OnePress\db\Items</code> MUST be named using <em>CamelCase</em>,
+starting with a upper letter.</li>
+<li>Classes extending from <code>OnePress\db\Items</code> MUST NOT contain any <em>underscore</em> <code>_</code>.</li>
+</ul>
+<pre><code class="language-php">class SubItems extends Items {} # This class is correctly named and stored in the table `sub_items`
+
+class sub_sub_item {} # This one, not
+
+class subSubSubSubItem {} # Nor this one</code></pre>
+<h3 id="property-names">Property names</h3>
+<p><strong><em>Rules</em></strong></p>
+<ul>
+<li>Properties of classes extending from <code>OnePress\db\Items</code> MUST be named using <em>CamelCase</em>,
+starting with a upper letter, **when they are not stored in database.</li>
+<li>Properties of classes extending from <code>OnePress\db\Items</code> MUST be named using _snake<em>case</em>,
+starting with a lower letter, <strong>when they are stored in database</strong>.</li>
+<li>Properties of classes extending from <code>OnePress\db\Items</code> MUST NOT contain any <em>underscore</em> <code>_</code>.</li>
+</ul>
+<pre><code class="language-php">class SubItems extends Items {
+    protected $stored_property; // property stored in the field `stored_property`
+    protected $UnstoredProperty; // property not stored in database
+    protected $Mal_formed_property; // don't do this !
+    protected $anotherMalFormedProperty; // this neither !
+}
+</code></pre>
+<h3 id="table-names">Table names</h3>
+<p>@todo</p>
+<h3 id="fields-names">Fields names</h3>
+<p>@todo</p>
                 </section>
 
             </div>
