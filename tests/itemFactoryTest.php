@@ -72,4 +72,15 @@ class ItemFactoryTest extends TestCase {
 		$this->assertInstanceOf('SubItems',$item);
 		$this->assertEquals($uid,$item->uid);
 	}
+
+	public function testFind() {
+		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
+		$name = $tItem->display_name;
+		$uid = $tItem->uid;
+		unset($tItem);
+		$item = SubItems::find(['display_name' => $name])[0];
+		$this->assertInstanceOf('SubItems',$item);
+		$this->assertEquals($uid,$item->uid);
+		$this->assertEquals($name,$item->display_name);
+	}
 }

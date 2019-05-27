@@ -55,7 +55,7 @@ class ItemFactory
 		var $item;
 
 		if (empty($name)) {
-			let $name = "New ".$class;
+			let $name = "New ".substr($class,0,-1)."-".uniqid();
 		}
 
 		if unlikely ($class !== "OnePress\\Db\\Items" && !is_subclass_of($class,"OnePress\\Db\\Items")) {
