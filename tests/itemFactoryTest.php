@@ -95,4 +95,12 @@ class ItemFactoryTest extends TestCase {
 		$this->assertEquals($name,$item->display_name);
 	}
 
+	public function testItemFindFirstByDisplay_nameGiveSubItem() {
+		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
+		$name = $tItem->display_name;
+		$uid = $tItem->uid;
+		unset($tItem);
+		$item = Items::findFirstByDisplay_name($name);
+		$this->assertInstanceOf('SubItems',$item);
+	}
 }
