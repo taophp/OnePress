@@ -45,8 +45,11 @@ class SubItems extends Items {
 
 ### Table names
 
-@todo
+Tables MUST have the same names as the classes they stored, but converted
+from _CamelCase_ to _snake_case_.
+The namespaces of the classes are ignored.
 
 ### Fields names
 
-@todo
+Fields MUST be the same names as the properties they store.
+So, as property names, fieldnames MUST be named using _snake_case_.
