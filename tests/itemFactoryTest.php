@@ -103,4 +103,9 @@ class ItemFactoryTest extends TestCase {
 		$item = Items::findFirstByDisplay_name($name);
 		$this->assertInstanceOf('SubItems',$item);
 	}
+
+	/**
+	 * @todo
+	 * */
+	public function testItemFindGiveSubItems(){}
 }
