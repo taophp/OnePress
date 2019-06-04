@@ -43,11 +43,11 @@ class subSubSubSubItem {} # Nor this one
 
 **_Rules_**
 
-* Properties of classes extending from `OnePress\db\Items` MUST be named using _CamelCase_,
-starting with a upper letter, **when they are not stored in database.
-* Properties of classes extending from `OnePress\db\Items` MUST be named using _snake_case_,
+* Properties of classes extending from `OnePress\db\Items` **MUST** be named using _CamelCase_,
+starting with a upper letter, **when they are not stored in database**.
+* Properties of classes extending from `OnePress\db\Items` **MUST** be named using _snake\_case_,
 starting with a lower letter, **when they are stored in database**.
-* Properties of classes extending from `OnePress\db\Items` MUST NOT contain any _underscore_ `_`.
+* Properties of classes extending from `OnePress\db\Items` **MUST** NOT contain any _underscore_ `_`.
 
 ```php
 class SubItems extends Items {
@@ -61,11 +61,11 @@ class SubItems extends Items {
 
 ### Table names
 
-Tables MUST have the same names as the classes they stored, but converted
-from _CamelCase_ to _snake_case_.
+Tables **MUST** have the same names as the classes they stored, but converted
+from _CamelCase_ to _snake\_case_.
 The namespaces of the classes are ignored.
 
 ### Fields names
 
-Fields MUST be the same names as the properties they store.
-So, as property names, fieldnames MUST be named using _snake_case_.
+Fields **MUST** be the same names as the properties they store.
+So, as property names, fieldnames MUST be named using _snake\_case_.
