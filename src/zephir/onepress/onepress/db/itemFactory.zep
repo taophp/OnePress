@@ -12,7 +12,7 @@ class ItemFactory
 		let $this->di = $di;
 	}
 
-	public function getById(const string! $uid)
+	public function getByUid(const string! $uid)
 	{
 		var $db,$sql,$result,$rows,$class,$item;
 
@@ -83,5 +83,13 @@ class ItemFactory
 		}
 
 		return implode("",$parts);
+	}
+
+	public function findFirst(var $parameters = null) -> <ModelInterface> | bool
+	{
+		var $item;
+
+		let $item = Items::findFirst($parameters);
+		return $this->getByUid($item->uid);
 	}
 }

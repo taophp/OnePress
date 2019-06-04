@@ -59,53 +59,62 @@ class ItemFactoryTest extends TestCase {
 		$tItem = $factory->getNew('OnePress\\Db\\Items');
 		$uid = $tItem->uid;
 		unset ($tItem);
-		$item = $factory->getById($uid);
+		$item = $factory->getByUid($uid);
 		$this->assertInstanceOf('OnePress\\Db\\Items',$item);
 		$this->assertEquals($uid,$item->uid);
 	}
 
 	public function testGetSubItemByUid() {
-		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
+		$factory = $this->di->get('itemFactory');
+		$tItem = $factory->getNew('SubItems');
 		$uid = $tItem->uid;
 		unset ($tItem);
-		$item = $this->di->get('itemFactory')->getById($uid);
+		$item = $factory->getByUid($uid);
 		$this->assertInstanceOf('SubItems',$item);
 		$this->assertEquals($uid,$item->uid);
 	}
 
-	public function testFind() {
+	/**
+	 * @expectedException Exception
+	 */
+	public function testItemsFindFirstThrowException() {
 		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
 		$name = $tItem->display_name;
 		$uid = $tItem->uid;
 		unset($tItem);
 		$item = SubItems::findFirst(["display_name = '".$name."'"]);
-		$this->assertInstanceOf('SubItems',$item);
-		$this->assertEquals($uid,$item->uid);
-		$this->assertEquals($name,$item->display_name);
 	}
 
-	public function testFindFirstByDisplay_name() {
-		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
+
+	public function testFind() {
+		$factory = $this->di->get('itemFactory');
+		$tItem = $factory->getNew('SubItems');
 		$name = $tItem->display_name;
 		$uid = $tItem->uid;
 		unset($tItem);
-		$item = SubItems::findFirstByDisplay_name($name);
+		$item = $factory->findFirst(["display_name = '".$name."'"]);
 		$this->assertInstanceOf('SubItems',$item);
 		$this->assertEquals($uid,$item->uid);
 		$this->assertEquals($name,$item->display_name);
-	}
-
-	public function testItemFindFirstByDisplay_nameGiveSubItem() {
-		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
-		$name = $tItem->display_name;
-		$uid = $tItem->uid;
-		unset($tItem);
-		$item = Items::findFirstByDisplay_name($name);
-		$this->assertInstanceOf('SubItems',$item);
 	}
 
 	/**
-	 * @todo
-	 * */
-	public function testItemFindGiveSubItems(){}
+	 * @expectedException Exception
+	 */
+	public function testSubItemsFindFirst_display_nameThrowException() {
+		$tItem = $this->di->get('itemFactory')->getNew('SubItems');
+		$name = $tItem->display_name;
+		unset($tItem);
+		$item = SubItems::findFirstByDisplay_name($name);
+	}
+
+	public function testItemFactoryFindFirst_display_name() {
+		$factory = $this->di->get('itemFactory');
+		$tItem = $factory->getNew('SubItems');
+		$name = $tItem->display_name;
+		$uid = $tItem->uid;
+		unset($tItem);
+		$item = $factory->findFirst(["display_name = '$name'"]);
+		$this->assertInstanceOf('SubItems',$item);
+	}
 }

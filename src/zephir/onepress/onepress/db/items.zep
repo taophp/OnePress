@@ -94,4 +94,15 @@ class Items extends Model {
 		$this->assign($rows[0]);
 		return true;
 	}
+
+	public static final function findFirst(var $parameters = null) -> <ModelInterface> | bool
+	{
+		var $caller;
+
+		let $caller = debug_backtrace()[1]["class"];
+		if unlikely !is_a($caller,"OnePress\Db\ItemFactory",true) {
+			throw "Items::findFirst() can only be called by OnePress\Db\ItemFactory (".$caller.")";
+		}
+		return parent::findFirst($parameters);
+	}
 }
