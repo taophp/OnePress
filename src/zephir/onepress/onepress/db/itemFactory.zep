@@ -58,7 +58,7 @@ class ItemFactory
 			let $name = "New ".substr($class,0,-1)."-".uniqid();
 		}
 
-		if unlikely ($class !== "OnePress\\Db\\Items" && !is_subclass_of($class,"OnePress\\Db\\Items")) {
+		if unlikely !is_a($class,"OnePress\\Db\\Items",true) {
 			throw "Class ".$class." is not a subclass of OnePress\Db\Items !";
 		}
 
