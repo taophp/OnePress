@@ -57,6 +57,16 @@
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="coding-standards">Coding standards</h1>
+<h2 id="variables-in-zephir-files">Variables in Zephir files</h2>
+<p>Zephir allows both <strong>static</strong> and <strong>dynamic</strong> types for variables. It also allows variable names to start with (like PHP) or without (like JavaScript) the dollar sign <code>$</code>. As PHP variables are always dynamic, we use the following convention :</p>
+<ul>
+<li><em>dynamic</em> variable names <strong>MUST</strong> start with the dollar <code>$</code> sign,</li>
+<li><em>static</em> variable names <strong>MUST NOT</strong> start with the dollar <code>$</code> sign.</li>
+</ul>
+<pre><code class="language-zephi">function test() {
+    var $mutable;
+    string notMutable;
+}</code></pre>
 <h2 id="objects-extending-from">Objects extending from <code>OnePress\db\Items</code></h2>
 <p>Those objects are stored in Postgresql database, which has its own naming sheme.
 In particular, all table and field names are lower case. This is not the way
@@ -77,11 +87,11 @@ class subSubSubSubItem {} # Nor this one</code></pre>
 <h3 id="property-names">Property names</h3>
 <p><strong><em>Rules</em></strong></p>
 <ul>
-<li>Properties of classes extending from <code>OnePress\db\Items</code> MUST be named using <em>CamelCase</em>,
-starting with a upper letter, **when they are not stored in database.</li>
-<li>Properties of classes extending from <code>OnePress\db\Items</code> MUST be named using _snake<em>case</em>,
+<li>Properties of classes extending from <code>OnePress\db\Items</code> <strong>MUST</strong> be named using <em>CamelCase</em>,
+starting with a upper letter, <strong>when they are not stored in database</strong>.</li>
+<li>Properties of classes extending from <code>OnePress\db\Items</code> <strong>MUST</strong> be named using <em>snake_case</em>,
 starting with a lower letter, <strong>when they are stored in database</strong>.</li>
-<li>Properties of classes extending from <code>OnePress\db\Items</code> MUST NOT contain any <em>underscore</em> <code>_</code>.</li>
+<li>Properties of classes extending from <code>OnePress\db\Items</code> <strong>MUST</strong> NOT contain any <em>underscore</em> <code>_</code>.</li>
 </ul>
 <pre><code class="language-php">class SubItems extends Items {
     protected $stored_property; // property stored in the field `stored_property`
@@ -91,12 +101,12 @@ starting with a lower letter, <strong>when they are stored in database</strong>.
 }
 </code></pre>
 <h3 id="table-names">Table names</h3>
-<p>Tables MUST have the same names as the classes they stored, but converted
-from <em>CamelCase</em> to _snake<em>case</em>.
+<p>Tables <strong>MUST</strong> have the same names as the classes they stored, but converted
+from <em>CamelCase</em> to <em>snake_case</em>.
 The namespaces of the classes are ignored.</p>
 <h3 id="fields-names">Fields names</h3>
-<p>Fields MUST be the same names as the properties they store.
-So, as property names, fieldnames MUST be named using _snake<em>case</em>.</p>
+<p>Fields <strong>MUST</strong> be the same names as the properties they store.
+So, as property names, fieldnames MUST be named using <em>snake_case</em>.</p>
                 </section>
 
             </div>
