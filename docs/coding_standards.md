@@ -1,5 +1,21 @@
 # Coding standards
 
+## Variables in Zephir files
+
+Zephir allows both **static** and **dynamic** types for variables. It also allows variable names to start with (like PHP) or without (like JavaScript) the dollar sign `$`. As PHP variables are always dynamic, we use the following convention :
+
+* _dynamic_ variable names **MUST** start with the dollar `$` sign,
+* _static_ variable names **MUST NOT** start with the dollar `$` sign.
+
+``` zephi
+function test() {
+	var $mutable;
+	string notMutable;
+}
+```
+
+
+
 ## Objects extending from `OnePress\db\Items`
 
 Those objects are stored in Postgresql database, which has its own naming sheme.
